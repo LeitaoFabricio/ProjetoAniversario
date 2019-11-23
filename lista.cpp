@@ -24,5 +24,7 @@ int Lista::size()
 
 Pessoa Lista::operator[](int indice)
 {
-    return minhalista[indice];
+  return minhalista[indice];
 }
+
+

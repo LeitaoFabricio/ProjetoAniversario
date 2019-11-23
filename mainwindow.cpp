@@ -46,9 +46,19 @@ void MainWindow::on_btOrdenacao_clicked()
   {
       minhalista.ordenarPorNome();
       ui->tabelaAniversarios->clearContents();
+      //Inserindo vetor ordenado na tabela
       for(int i=0; i<minhalista.size();i++){
           inserirNaTabela(minhalista[i],i);
+      }//Ideia: uma função com essa finalidade
+  }else{
+      if(ui->ordenacao->currentText() == "Ordenar por data")
+      {
+        //minhalista.ordenarPorData();
+        //ui->tabelaAniversarios->clearContents();
+        //Inserindo vetor ordenado na tabela
+        for(int i=0; i<minhalista.size();i++){
+          inserirNaTabela(minhalista[i],i);
+        }//Ideia: uma função com essa finalidade
       }
   }
-
 }

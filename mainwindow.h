@@ -20,12 +20,17 @@ public:
   ~MainWindow();
 
 private slots:
+
   void on_btConfirmar_clicked();
-  void inserirNaTabela(Pessoa p, int q_l);
+
   void on_btOrdenacao_clicked();
 
 private:
   Ui::MainWindow *ui;
+
+  Lista minhalista;
+
+  void inserirNaTabela(Pessoa p, int q_l);
 };
 
 #endif // MAINWINDOW_H

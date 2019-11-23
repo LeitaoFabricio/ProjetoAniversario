@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>416</height>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,7 +121,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>9</x>
@@ -168,8 +168,6 @@
      </attribute>
     </widget>
    </widget>
-   <zorder>tabWidget</zorder>
-   <zorder>tabelaAniversarios</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
