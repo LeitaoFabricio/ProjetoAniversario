@@ -23,7 +23,7 @@ private slots:
 
   void on_btConfirmar_clicked();
 
-  void on_btOrdenacao_clicked();
+  void on_ordenacao_currentIndexChanged(const QString &arg1);
 
 private:
   Ui::MainWindow *ui;
@@ -31,6 +31,8 @@ private:
   Lista minhalista;
 
   void inserirNaTabela(Pessoa p, int q_l);
+
+  bool habilitarOrdenacao();
 };
 
 #endif // MAINWINDOW_H

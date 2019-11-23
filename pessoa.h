@@ -11,7 +11,7 @@ private:
 public:
   Pessoa();
   QString getNome() const;
-  void setNome(const QString &value);
+  bool setNome(const QString &value);
 
 };
 
