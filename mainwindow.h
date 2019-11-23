@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QMessageBox>
+#include <QDateEdit>
 
 #include "pessoa.h"
 #include "lista.h"
@@ -25,6 +27,10 @@ private slots:
 
   void on_ordenacao_currentIndexChanged(const QString &arg1);
 
+  void on_inputNome_cursorPositionChanged(int arg1, int arg2);
+
+  void on_inputData_userDateChanged(const QDate &date);
+
 private:
   Ui::MainWindow *ui;
 
@@ -32,7 +38,12 @@ private:
 
   void inserirNaTabela(Pessoa p, int q_l);
 
+  void mensagemDeErro();
+
   bool habilitarOrdenacao();
+
+  bool limparOrdenacao(int a1, int a2);
+
 };
 
 #endif // MAINWINDOW_H

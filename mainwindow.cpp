@@ -16,6 +16,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_btConfirmar_clicked()
 {
     Pessoa pessoa;
+    QDateEdit data;
     int qtde_linhas;
 
     QString nome = ui->inputNome->text();
@@ -31,6 +32,8 @@ void MainWindow::on_btConfirmar_clicked()
       inserirNaTabela(pessoa, qtde_linhas);
       //Inserindo a pessoa na lista
       minhalista.inserirPessoa(pessoa);//dúvida
+    }else{
+      mensagemDeErro();
     }
     habilitarOrdenacao();
 }
@@ -38,6 +41,11 @@ void MainWindow::on_btConfirmar_clicked()
 void MainWindow::inserirNaTabela(Pessoa p, int q_l)
 {
   ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
+}
+
+void MainWindow::mensagemDeErro()
+{
+  QMessageBox::critical(this,"Aviso de erro","O nome inserido é inválido.");
 }
 
 bool MainWindow::habilitarOrdenacao()
@@ -48,13 +56,24 @@ bool MainWindow::habilitarOrdenacao()
   }else{
       ui->ordenacao->setEnabled(false);
       return false;
-  }
+    }
 }
+
+bool MainWindow::limparOrdenacao(int a1, int a2)
+{
+  if(a1 == 0 && a2 == 1){
+    ui->ordenacao->setCurrentIndex(0);
+    return true;
+  }else
+    return false;
+}
+
+
 //---------------------------------------------------------------//
 void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
 {//Pode ser aperfeiçoado?
     //qDebug() << arg1;//A possibilidade de usar o ComboBox para selecionar o critério de ordenação
-    if(ui->ordenacao->currentText() == "Ordenar por nome")
+    if(arg1 == "Ordenar por nome")
     {
         minhalista.ordenarPorNome();
         ui->tabelaAniversarios->clearContents();
@@ -62,10 +81,8 @@ void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
         for(int i=0; i<minhalista.size();i++){
             inserirNaTabela(minhalista[i],i);
         }//Ideia: uma função com essa finalidade
-
-        ui->ordenacao->objectName().isEmpty();
     }else{
-        if(ui->ordenacao->currentText() == "Ordenar por data")
+        if(arg1 == "Ordenar por data")
         {
           //minhalista.ordenarPorData();
           //ui->tabelaAniversarios->clearContents();
@@ -75,4 +92,15 @@ void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
           }//Ideia: uma função com essa finalidade
         }
     }
+}
+
+
+void MainWindow::on_inputNome_cursorPositionChanged(int arg1, int arg2)
+{
+  limparOrdenacao(arg1, arg2);
+}
+
+void MainWindow::on_inputData_userDateChanged(const QDate &date)
+{
+
 }
