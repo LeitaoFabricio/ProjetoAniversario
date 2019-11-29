@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QMessageBox>
-#include <QDateEdit>
+#include <QDate>
+#include <locale>
 
 #include "pessoa.h"
 #include "lista.h"
@@ -36,6 +37,8 @@ private:
 
   Lista minhalista;
 
+  QString prepararData(QDate d1);
+
   void inserirNaTabela(Pessoa p, int q_l);
 
   void mensagemDeErro();
@@ -43,6 +46,8 @@ private:
   bool habilitarOrdenacao();
 
   bool limparOrdenacao(int a1, int a2);
+
+  bool limparOrdenacao();
 
 };
 

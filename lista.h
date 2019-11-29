@@ -14,6 +14,7 @@ public:
   Lista();
   void inserirPessoa(Pessoa p);
   void ordenarPorNome();
+  void ordenarPorData();
   int size();
   Pessoa operator[](int indice);
 };

@@ -2,16 +2,19 @@
 #define PESSOA_H
 
 #include <QString>
+#include <QDate>
 
 class Pessoa
 {
 private:
   QString nome;
-  //e data
+  QDate data;
 public:
-  Pessoa();
+  Pessoa(); 
   QString getNome() const;
+  QDate getData() const;
   bool setNome(const QString &value);
+  bool setData(const QDate &value);
 
 };
 

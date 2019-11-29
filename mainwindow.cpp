@@ -16,14 +16,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_btConfirmar_clicked()
 {
     Pessoa pessoa;
-    QDateEdit data;
     int qtde_linhas;
 
     QString nome = ui->inputNome->text();
+    QDate data = ui->inputData->date();
 
     bool testa_nome = pessoa.setNome(nome);
-    if(testa_nome == true){
+    bool testa_data = pessoa.setData(data);
+    if(testa_nome == true && testa_data == true){
       ui->inputNome->clear();
+      ui->inputData->clearFocus();
 
       qtde_linhas = ui->tabelaAniversarios->rowCount();
       //Nova linha na tabela
@@ -38,16 +40,27 @@ void MainWindow::on_btConfirmar_clicked()
     habilitarOrdenacao();
 }
 //---------------------------------------------------------------//
+QString MainWindow::prepararData(QDate d1)
+{
+  QString d = QString::number(d1.day());
+  QString m = QString::number(d1.month());
+  QString a = QString::number(d1.year());
+
+  return d+"/"+m+"/"+a;
+}
+//----------------------------------------------------------------//
 void MainWindow::inserirNaTabela(Pessoa p, int q_l)
 {
+  QString data1 = prepararData(p.getData());
   ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
+  ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
 }
-
+//-----------------------------------------------------------------//
 void MainWindow::mensagemDeErro()
 {
   QMessageBox::critical(this,"Aviso de erro","O nome inserido é inválido.");
 }
-
+//---------------------------------------------------------------------//
 bool MainWindow::habilitarOrdenacao()
 {
   if(minhalista.size() >= 2){
@@ -58,7 +71,7 @@ bool MainWindow::habilitarOrdenacao()
       return false;
     }
 }
-
+//---------------------------------------------------------------//
 bool MainWindow::limparOrdenacao(int a1, int a2)
 {
   if(a1 == 0 && a2 == 1){
@@ -67,8 +80,12 @@ bool MainWindow::limparOrdenacao(int a1, int a2)
   }else
     return false;
 }
-
-
+//---------------------------------------------------------------//
+bool MainWindow::limparOrdenacao()
+{
+  ui->ordenacao->setCurrentIndex(0);
+  return true;
+}
 //---------------------------------------------------------------//
 void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
 {//Pode ser aperfeiçoado?
@@ -84,8 +101,8 @@ void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
     }else{
         if(arg1 == "Ordenar por data")
         {
-          //minhalista.ordenarPorData();
-          //ui->tabelaAniversarios->clearContents();
+          minhalista.ordenarPorData();
+          ui->tabelaAniversarios->clearContents();
           //Inserindo vetor ordenado na tabela
           for(int i=0; i<minhalista.size();i++){
             inserirNaTabela(minhalista[i],i);
@@ -93,14 +110,17 @@ void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
         }
     }
 }
-
-
+//---------------------------------------------------------------------//
 void MainWindow::on_inputNome_cursorPositionChanged(int arg1, int arg2)
 {
   limparOrdenacao(arg1, arg2);
 }
-
+//---------------------------------------------------------------------//
+//teste de uso de Date Edit
 void MainWindow::on_inputData_userDateChanged(const QDate &date)
 {
-
+   limparOrdenacao();
 }
+
+
+
