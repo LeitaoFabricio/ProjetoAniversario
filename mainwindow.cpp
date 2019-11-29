@@ -20,12 +20,14 @@ void MainWindow::on_btConfirmar_clicked()
 
     QString nome = ui->inputNome->text();
     QDate data = ui->inputData->date();
+    QString descricao = ui->descricaoPessoaText->;//Capturar o texto
 
     bool testa_nome = pessoa.setNome(nome);
     bool testa_data = pessoa.setData(data);
+    pessoa.setDescricaoPessoa(descricao);
     if(testa_nome == true && testa_data == true){
       ui->inputNome->clear();
-      ui->inputData->clearFocus();
+      ui->inputData->clearMask();
 
       qtde_linhas = ui->tabelaAniversarios->rowCount();
       //Nova linha na tabela
@@ -54,6 +56,7 @@ void MainWindow::inserirNaTabela(Pessoa p, int q_l)
   QString data1 = prepararData(p.getData());
   ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
   ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
+  ui->tabelaAniversarios->setItem(q_l,2, new QTableWidgetItem(p.getDescricaoPessoa()));
 }
 //-----------------------------------------------------------------//
 void MainWindow::mensagemDeErro()
