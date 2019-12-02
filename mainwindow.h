@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QDate>
+#include <QDateEdit>
 #include <locale>
 
 #include "pessoa.h"

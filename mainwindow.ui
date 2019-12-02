@@ -99,6 +99,11 @@
         <string>Legenda</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>Idade</string>
+       </property>
+      </column>
      </widget>
      <widget class="QLabel" name="titulo">
       <property name="geometry">
@@ -180,7 +185,7 @@
        </property>
       </item>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>

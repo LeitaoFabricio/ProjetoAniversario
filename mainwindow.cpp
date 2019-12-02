@@ -20,14 +20,17 @@ void MainWindow::on_btConfirmar_clicked()
 
     QString nome = ui->inputNome->text();
     QDate data = ui->inputData->date();
-    QString descricao = ui->descricaoPessoaText->;//Capturar o texto
+    QString descricao = ui->descricaoPessoaText->toPlainText();
+    int idade;
 
     bool testa_nome = pessoa.setNome(nome);
     bool testa_data = pessoa.setData(data);
     pessoa.setDescricaoPessoa(descricao);
+    pessoa.setIdade(data);
     if(testa_nome == true && testa_data == true){
       ui->inputNome->clear();
       ui->inputData->clearMask();
+      ui->descricaoPessoaText->clear();
 
       qtde_linhas = ui->tabelaAniversarios->rowCount();
       //Nova linha na tabela
@@ -44,11 +47,15 @@ void MainWindow::on_btConfirmar_clicked()
 //---------------------------------------------------------------//
 QString MainWindow::prepararData(QDate d1)
 {
+/*
   QString d = QString::number(d1.day());
   QString m = QString::number(d1.month());
   QString a = QString::number(d1.year());
 
   return d+"/"+m+"/"+a;
+*/
+  QString data = d1.toString();//Ajustar
+  return data;
 }
 //----------------------------------------------------------------//
 void MainWindow::inserirNaTabela(Pessoa p, int q_l)
@@ -57,11 +64,12 @@ void MainWindow::inserirNaTabela(Pessoa p, int q_l)
   ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
   ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
   ui->tabelaAniversarios->setItem(q_l,2, new QTableWidgetItem(p.getDescricaoPessoa()));
+  ui->tabelaAniversarios->setItem(q_l,3, new QTableWidgetItem(QString::number(p.getIdade())));
 }
 //-----------------------------------------------------------------//
 void MainWindow::mensagemDeErro()
 {
-  QMessageBox::critical(this,"Aviso de erro","O nome inserido é inválido.");
+  QMessageBox::critical(this,"Aviso de erro","Nome e/ou data cadastrado(s) inválido(s).");
 }
 //---------------------------------------------------------------------//
 bool MainWindow::habilitarOrdenacao()
