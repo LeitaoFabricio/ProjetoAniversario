@@ -3,7 +3,8 @@
 
 #include <QVector>
 #include <algorithm>
-
+#include <QFile>
+#include <QStringList>
 #include "pessoa.h"
 
 class Lista
@@ -17,6 +18,7 @@ public:
   void ordenarPorData();
   int size();
   Pessoa operator[](int indice);
+  void salvarDados(QString file);
 };
 
 #endif // LISTA_H

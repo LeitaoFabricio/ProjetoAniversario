@@ -21,16 +21,14 @@ void MainWindow::on_btConfirmar_clicked()
     QString nome = ui->inputNome->text();
     QDate data = ui->inputData->date();
     QString descricao = ui->descricaoPessoaText->toPlainText();
-    int idade;
 
     bool testa_nome = pessoa.setNome(nome);
     bool testa_data = pessoa.setData(data);
     pessoa.setDescricaoPessoa(descricao);
     pessoa.setIdade(data);
     if(testa_nome == true && testa_data == true){
-      ui->inputNome->clear();
-      ui->inputData->clearMask();
-      ui->descricaoPessoaText->clear();
+
+      limparCamposCadastro();
 
       qtde_linhas = ui->tabelaAniversarios->rowCount();
       //Nova linha na tabela
@@ -88,14 +86,23 @@ bool MainWindow::limparOrdenacao(int a1, int a2)
   if(a1 == 0 && a2 == 1){
     ui->ordenacao->setCurrentIndex(0);
     return true;
-  }else
+  }else{
     return false;
+  }
 }
 //---------------------------------------------------------------//
 bool MainWindow::limparOrdenacao()
 {
   ui->ordenacao->setCurrentIndex(0);
   return true;
+}
+//---------------------------------------------------------------//
+void MainWindow::limparCamposCadastro()
+{
+  QDate d(2000, 1, 1);
+  ui->inputNome->clear();
+  ui->inputData->QDateEdit::setDate(d);
+  ui->descricaoPessoaText->clear();
 }
 //---------------------------------------------------------------//
 void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
@@ -132,6 +139,18 @@ void MainWindow::on_inputData_userDateChanged(const QDate &date)
 {
    limparOrdenacao();
 }
+//---------------------------------------------------------------------//
 
 
 
+void MainWindow::on_tabelaAniversarios_cellChanged(int row, int column)
+{
+  //VAZIO POR ENQUANTO
+}
+
+void MainWindow::on_actionSalvar_triggered()
+{
+  QString filename;
+  filename = QFileDialog::getSaveFileName(this,"Salvar Arquivo","","*.csv");
+  minhalista.salvarDados(filename);
+}

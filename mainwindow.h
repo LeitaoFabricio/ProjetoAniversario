@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QDateEdit>
 #include <locale>
+#include <QFileDialog>
 
 #include "pessoa.h"
 #include "lista.h"
@@ -33,6 +34,10 @@ private slots:
 
   void on_inputData_userDateChanged(const QDate &date);
 
+  void on_tabelaAniversarios_cellChanged(int row, int column);
+
+  void on_actionSalvar_triggered();
+
 private:
   Ui::MainWindow *ui;
 
@@ -49,6 +54,8 @@ private:
   bool limparOrdenacao(int a1, int a2);
 
   bool limparOrdenacao();
+
+  void limparCamposCadastro();
 
 };
 

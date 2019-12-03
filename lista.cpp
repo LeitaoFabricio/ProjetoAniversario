@@ -37,4 +37,18 @@ Pessoa Lista::operator[](int indice)
   return minhalista[indice];
 }
 
+void Lista::salvarDados(QString file)
+{
+  QFile arquivo(file);
+  QString linha;
+
+  arquivo.open(QIODevice::WriteOnly);
+
+  for(auto a: minhalista){
+     linha = a.getNome() + "," + a.getData().toString() + "," + a.getDescricaoPessoa() + "," + QString::number(a.getIdade()) + "\n";
+     arquivo.write(linha.toLocal8Bit());
+  }
+  arquivo.close();
+}
+
 

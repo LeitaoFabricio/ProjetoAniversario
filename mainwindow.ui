@@ -312,7 +312,9 @@
     <property name="title">
      <string>Arquivo</string>
     </property>
+    <addaction name="separator"/>
     <addaction name="actionSalvar"/>
+    <addaction name="separator"/>
     <addaction name="actionCarregar"/>
    </widget>
    <addaction name="menuArquivo"/>
