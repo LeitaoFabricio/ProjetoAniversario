@@ -19,6 +19,7 @@ public:
   int size();
   Pessoa operator[](int indice);
   void salvarDados(QString file);
+  void carregarDados(QString file);
 };
 
 #endif // LISTA_H

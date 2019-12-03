@@ -51,4 +51,28 @@ void Lista::salvarDados(QString file)
   arquivo.close();
 }
 
+void Lista::carregarDados(QString file)
+{
+  QFile arquivo(file);
+  arquivo.open(QIODevice::ReadOnly);
+
+  QString linha;
+  QStringList dados;
+
+  while(!arquivo.atEnd()){
+    Pessoa temp;
+    QDate temp1;
+    int temp2;
+    linha = arquivo.readLine();
+    dados = linha.split(",");
+    temp.setNome(dados[0]);
+    temp.setData(temp1.fromString(dados[1]));
+    temp.setDescricaoPessoa(dados[2]);
+    //temp.setIdade(dados[3].toInt()); Não está funcionando
+
+    inserirPessoa(temp);
+  }
+  arquivo.close();
+}
+
 

@@ -34,9 +34,9 @@ private slots:
 
   void on_inputData_userDateChanged(const QDate &date);
 
-  void on_tabelaAniversarios_cellChanged(int row, int column);
-
   void on_actionSalvar_triggered();
+
+  void on_actionCarregar_triggered();
 
 private:
   Ui::MainWindow *ui;

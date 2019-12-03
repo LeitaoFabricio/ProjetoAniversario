@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+  //Impede a edição direta da tabela pelo usuário
+  ui->tabelaAniversarios->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 MainWindow::~MainWindow()
@@ -140,17 +142,22 @@ void MainWindow::on_inputData_userDateChanged(const QDate &date)
    limparOrdenacao();
 }
 //---------------------------------------------------------------------//
-
-
-
-void MainWindow::on_tabelaAniversarios_cellChanged(int row, int column)
-{
-  //VAZIO POR ENQUANTO
-}
-
 void MainWindow::on_actionSalvar_triggered()
 {
   QString filename;
   filename = QFileDialog::getSaveFileName(this,"Salvar Arquivo","","*.csv");
   minhalista.salvarDados(filename);
+}
+//--------------------------------------------------------------------//
+void MainWindow::on_actionCarregar_triggered()
+{
+  QString filename;
+  filename = QFileDialog::getOpenFileName(this, "Abrir Arquivo","","*.csv");
+  minhalista.carregarDados(filename);//falta implementar esta função
+
+  for(int i=0;i<minhalista.size();i++){
+      ui->tabelaAniversarios->insertRow(i);
+      inserirNaTabela(minhalista[i],i);
+  }
+  //atualizarEstatisticas();
 }
