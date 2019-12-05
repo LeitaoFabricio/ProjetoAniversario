@@ -64,6 +64,11 @@ void Pessoa::setIdade(const QDate &value)
   }
 }
 
+void Pessoa::setIdade(const QString &value)
+{
+  idade = value.toInt();
+}
+
 Pessoa::Pessoa()
 {
 

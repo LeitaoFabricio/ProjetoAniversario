@@ -22,6 +22,7 @@ public:
   bool setData(const QDate &value);
   bool setDescricaoPessoa(const QString &value);
   void setIdade(const QDate &value);
+  void setIdade(const QString &value);
 
 };
 

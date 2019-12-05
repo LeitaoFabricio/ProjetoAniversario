@@ -38,6 +38,10 @@ private slots:
 
   void on_actionCarregar_triggered();
 
+  void on_inputNome_returnPressed();
+
+  void on_bt_editarTabela_clicked();
+
 private:
   Ui::MainWindow *ui;
 
@@ -47,15 +51,17 @@ private:
 
   void inserirNaTabela(Pessoa p, int q_l);
 
-  void mensagemDeErro();
+  void mensagemDeErro(bool n, bool d);
+
+  void limparCamposCadastro();
+
+  void atualizarEstatisticas();
 
   bool habilitarOrdenacao();
 
   bool limparOrdenacao(int a1, int a2);
 
   bool limparOrdenacao();
-
-  void limparCamposCadastro();
 
 };
 

@@ -5,9 +5,62 @@ Lista::Lista()
 
 }
 
-void Lista::inserirPessoa(Pessoa p)
+int Lista::getMaiorIdade()
 {
-  minhalista.push_back(p);
+    Pessoa *p = std::max_element(minhalista.begin(),minhalista.end(),compararPorIdade);
+    return p->getIdade();
+}
+
+int Lista::getMenorIdade()
+{
+    Pessoa *p = std::min_element(minhalista.begin(),minhalista.end(),compararPorIdade);
+    return p->getIdade();
+}
+
+QString Lista::getMaiorIdadePessoa()
+{
+    Pessoa *p = std::max_element(minhalista.begin(),minhalista.end(),compararPorIdade);
+    return p->getNome();
+}
+
+QString Lista::getMenorIdadePessoa()
+{
+    Pessoa *p = std::min_element(minhalista.begin(),minhalista.end(),compararPorIdade);
+    return p->getNome();
+}
+
+
+bool Lista::inserirPessoa(Pessoa p)
+{
+  if (minhalista.size() == 0){
+    minhalista.push_back(p);
+    x = true;
+    qDebug() << QString::number(minhalista.size()) + ", posição " + QString::number(minhalista.size()-1);
+    return true;
+  }
+  if(minhalista.size() != 0){
+    for(int i = 0;i < minhalista.size();i++){
+      //std:: string w1 = p.getNome().toStdString(), w2 = minhalista[i].getNome().toStdString();
+      //if(w1.std::string::find(w2) != -1 && p.getData() == minhalista[i].getData()){ //usar método find para testar o nome
+      if((p.getNome() == minhalista[i].getNome() || p.getNome()+" " == minhalista[i].getNome() || p.getNome() == minhalista[i].getNome()+" " || p.getNome()+" " == minhalista[i].getNome()+" ") && p.getData() == minhalista[i].getData()){
+          x = false;
+          qDebug() << "Repetido";
+          return false;
+      }
+    }
+    minhalista.push_back(p);
+    x = true;
+    qDebug() << QString::number(minhalista.size()) + ", posição " + QString::number(minhalista.size()-1);
+    return true;
+    }
+}
+
+bool Lista::inserirPessoa()
+{
+  if(x == true)
+    return true;
+  else
+    return false;
 }
 
 void Lista::ordenarPorNome()
@@ -62,17 +115,21 @@ void Lista::carregarDados(QString file)
   while(!arquivo.atEnd()){
     Pessoa temp;
     QDate temp1;
-    int temp2;
     linha = arquivo.readLine();
     dados = linha.split(",");
     temp.setNome(dados[0]);
     temp.setData(temp1.fromString(dados[1]));
     temp.setDescricaoPessoa(dados[2]);
-    //temp.setIdade(dados[3].toInt()); Não está funcionando
+    temp.setIdade(dados[3]);
 
     inserirPessoa(temp);
+    inserirPessoa();
+
   }
   arquivo.close();
 }
 
-
+bool compararPorIdade(Pessoa a, Pessoa b)
+{
+    return a.getIdade()<b.getIdade();
+}

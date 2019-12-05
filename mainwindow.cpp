@@ -28,21 +28,25 @@ void MainWindow::on_btConfirmar_clicked()
     bool testa_data = pessoa.setData(data);
     pessoa.setDescricaoPessoa(descricao);
     pessoa.setIdade(data);
+
     if(testa_nome == true && testa_data == true){
 
       limparCamposCadastro();
-
-      qtde_linhas = ui->tabelaAniversarios->rowCount();
-      //Nova linha na tabela
-      ui->tabelaAniversarios->insertRow(qtde_linhas);
-      //Inserindo dados na tabela
-      inserirNaTabela(pessoa, qtde_linhas);
       //Inserindo a pessoa na lista
-      minhalista.inserirPessoa(pessoa);//dúvida
+      bool inserido_na_lista = minhalista.inserirPessoa(pessoa);//dúvida
+      //Inserindo dados na tabela
+      if(inserido_na_lista == true){
+        qDebug() << "inserido no vetor";
+        qtde_linhas = ui->tabelaAniversarios->rowCount();
+        //Nova linha na tabela
+        ui->tabelaAniversarios->insertRow(qtde_linhas);
+        inserirNaTabela(pessoa, qtde_linhas);
+       }
     }else{
-      mensagemDeErro();
+      mensagemDeErro(testa_nome,testa_data);
     }
     habilitarOrdenacao();
+    atualizarEstatisticas();
 }
 //---------------------------------------------------------------//
 QString MainWindow::prepararData(QDate d1)
@@ -54,22 +58,27 @@ QString MainWindow::prepararData(QDate d1)
 
   return d+"/"+m+"/"+a;
 */
-  QString data = d1.toString();//Ajustar
+  QString data = d1.toString(Qt::RFC2822Date);
   return data;
 }
 //----------------------------------------------------------------//
 void MainWindow::inserirNaTabela(Pessoa p, int q_l)
 {
-  QString data1 = prepararData(p.getData());
-  ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
-  ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
-  ui->tabelaAniversarios->setItem(q_l,2, new QTableWidgetItem(p.getDescricaoPessoa()));
-  ui->tabelaAniversarios->setItem(q_l,3, new QTableWidgetItem(QString::number(p.getIdade())));
+        QString data1 = prepararData(p.getData());
+        ui->tabelaAniversarios->setItem(q_l,0, new QTableWidgetItem(p.getNome()));
+        ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
+        ui->tabelaAniversarios->setItem(q_l,2, new QTableWidgetItem(p.getDescricaoPessoa()));
+        ui->tabelaAniversarios->setItem(q_l,3, new QTableWidgetItem(QString::number(p.getIdade())));
 }
 //-----------------------------------------------------------------//
-void MainWindow::mensagemDeErro()
+void MainWindow::mensagemDeErro(bool n, bool d)
 {
-  QMessageBox::critical(this,"Aviso de erro","Nome e/ou data cadastrado(s) inválido(s).");
+    if(d == true && n == false)
+        QMessageBox::critical(this,"Nome inválido","Digite um nome válido.");
+    else if(d == false && n == true)
+        QMessageBox::critical(this,"Data inválida","Digite uma data válida.");
+    else
+        QMessageBox::critical(this,"Dados inválidos","Insira dados válidos.");
 }
 //---------------------------------------------------------------------//
 bool MainWindow::habilitarOrdenacao()
@@ -80,7 +89,7 @@ bool MainWindow::habilitarOrdenacao()
   }else{
       ui->ordenacao->setEnabled(false);
       return false;
-    }
+  }
 }
 //---------------------------------------------------------------//
 bool MainWindow::limparOrdenacao(int a1, int a2)
@@ -107,9 +116,16 @@ void MainWindow::limparCamposCadastro()
   ui->descricaoPessoaText->clear();
 }
 //---------------------------------------------------------------//
+void MainWindow::atualizarEstatisticas()
+{
+  ui->pmv->setText(minhalista.getMaiorIdadePessoa());
+  ui->pmn->setText(minhalista.getMenorIdadePessoa());
+  ui->maiori->setText(QString::number(minhalista.getMaiorIdade()));
+  ui->menori->setText(QString::number(minhalista.getMenorIdade()));
+}
+//---------------------------------------------------------------//
 void MainWindow::on_ordenacao_currentIndexChanged(const QString &arg1)
-{//Pode ser aperfeiçoado?
-    //qDebug() << arg1;//A possibilidade de usar o ComboBox para selecionar o critério de ordenação
+{
     if(arg1 == "Ordenar por nome")
     {
         minhalista.ordenarPorNome();
@@ -136,7 +152,6 @@ void MainWindow::on_inputNome_cursorPositionChanged(int arg1, int arg2)
   limparOrdenacao(arg1, arg2);
 }
 //---------------------------------------------------------------------//
-//teste de uso de Date Edit
 void MainWindow::on_inputData_userDateChanged(const QDate &date)
 {
    limparOrdenacao();
@@ -153,11 +168,24 @@ void MainWindow::on_actionCarregar_triggered()
 {
   QString filename;
   filename = QFileDialog::getOpenFileName(this, "Abrir Arquivo","","*.csv");
-  minhalista.carregarDados(filename);//falta implementar esta função
+  minhalista.carregarDados(filename);
 
-  for(int i=0;i<minhalista.size();i++){
-      ui->tabelaAniversarios->insertRow(i);
-      inserirNaTabela(minhalista[i],i);
+  if(minhalista.inserirPessoa() == true){
+    for(int i=0;i<minhalista.size();i++){
+          ui->tabelaAniversarios->insertRow(i);
+          inserirNaTabela(minhalista[i],i);
+    }
   }
-  //atualizarEstatisticas();
+  habilitarOrdenacao();
+  atualizarEstatisticas();
+}
+//---------------------------------------------------------------------//
+void MainWindow::on_inputNome_returnPressed()
+{
+    ui->inputData->setFocus();
+}
+//---------------------------------------------------------------------//
+void MainWindow::on_bt_editarTabela_clicked()
+{
+
 }
