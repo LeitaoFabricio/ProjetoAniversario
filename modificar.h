@@ -22,7 +22,6 @@ public:
     QString getAlterarNome();
 
 private slots:
-    void on_buttonBox_rejected();
 
     void on_escolha_modificar_tabela_currentTextChanged(const QString &arg1);
 
@@ -30,11 +29,9 @@ private slots:
 
 private:
     Ui::Modificar *ui;
-    QString nome_alterado;
-    //QDate data_alterada;
-    //QString descricao_alterada;
-    signals:
-        void nomeAlterado();
+
+signals:
+    void respostaOpcao();
 
 };
 

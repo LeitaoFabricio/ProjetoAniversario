@@ -129,6 +129,16 @@ void Lista::carregarDados(QString file)
   arquivo.close();
 }
 
+void Lista::deletarPessoa(const int &linha)
+{
+    minhalista.remove(linha);
+}
+
+void Lista::substituirPessoa(const int &linha, Pessoa p)
+{
+    minhalista.replace(linha, p);
+}
+
 bool compararPorIdade(Pessoa a, Pessoa b)
 {
     return a.getIdade()<b.getIdade();

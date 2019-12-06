@@ -8,6 +8,7 @@
 #include <QDateEdit>
 #include <locale>
 #include <QFileDialog>
+#include <QPushButton>
 
 #include "pessoa.h"
 #include "lista.h"
@@ -41,7 +42,9 @@ private slots:
 
   void on_inputNome_returnPressed();
 
-   void on_bt_editarTabela_clicked();
+  void on_tabelaAniversarios_cellDoubleClicked(int row, int column);
+
+  void on_btEditar_clicked(bool checked);
 
 private:
   Ui::MainWindow *ui;
@@ -67,6 +70,11 @@ private:
   bool limparOrdenacao();
 
   void atualizarNome();
+
+signals:
+
+  void toggled(bool checked);
+
 
 };
 

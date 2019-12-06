@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   //Impede a edição direta da tabela pelo usuário
   ui->tabelaAniversarios->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  habilitarOrdenacao();
 
   connect(&janela_modificar, SIGNAL(nomeAlterado()), this, SLOT(atualizarNome()));
 }
@@ -44,16 +45,16 @@ void MainWindow::on_btConfirmar_clicked()
         ui->tabelaAniversarios->insertRow(qtde_linhas);
         inserirNaTabela(pessoa, qtde_linhas);
        }
+      habilitarOrdenacao();
+      atualizarEstatisticas();
     }else{
-        //if(testa_data == true && testa_nome == false)
-            //QMessageBox::warning(this,"Nome inválido","Digite um nome válido.");
-        //else if(testa_data == false && testa_nome == true)
-            //QMessageBox::warning(this,"Data inválida","Digite uma data válida.");
-        //else if(testa_data == false && testa_nome == false)
+        if(testa_data == true && testa_nome == false)
+            QMessageBox::warning(this,"Nome inválido","Digite um nome válido.");
+        else if(testa_data == false && testa_nome == true)
+            QMessageBox::warning(this,"Data inválida","Digite uma data válida.");
+        else if(testa_data == false && testa_nome == false)
             QMessageBox::warning(this,"Dados inválidos","Insira dados válidos.");
     }
-    habilitarOrdenacao();
-    atualizarEstatisticas();
 }
 //---------------------------------------------------------------//
 QString MainWindow::prepararData(QDate d1)
@@ -107,14 +108,7 @@ bool MainWindow::limparOrdenacao()
 //---------------------------------------------------------------//
 void MainWindow::atualizarNome()//Aqui dá problema
 {
-    Pessoa pessoa;
 
-    bool testa_nome = pessoa.setNome(janela_modificar.getAlterarNome());
-
-    if(testa_nome == 1){
-        minhalista.inserirPessoa(pessoa);
-
-    }
 }
 //---------------------------------------------------------------//
 void MainWindow::limparCamposCadastro()
@@ -194,11 +188,61 @@ void MainWindow::on_inputNome_returnPressed()
     ui->inputData->setFocus();
 }
 //---------------------------------------------------------------------//
-void MainWindow::on_bt_editarTabela_clicked()
+void MainWindow::on_tabelaAniversarios_cellDoubleClicked(int row, int column)
 {
-    QMessageBox::StandardButton resposta = QMessageBox::question(this,"Modificar tabela","Deseja mexer na tabela?");
-    if(resposta == QMessageBox::Yes){
-        janela_modificar.show();
+    ui->tabelaAniversarios->selectRow(row);
+
+    QMessageBox::StandardButton resposta1 = QMessageBox::question(this,"Escolha a maneira","OPERAÇÃO?",QMessageBox::Yes|QMessageBox::Close|QMessageBox::No);
+    //yes -> excluir
+    //no -> editar
+    if(resposta1 == QMessageBox::Yes){
+        minhalista.deletarPessoa(row);
+
+        QMessageBox::information(this,"Edição realizada com sucesso!","Pessoa removida.");
+
+        ui->tabelaAniversarios->removeRow(row);
+        ui->tabelaAniversarios->clearContents();
+        for(int i=0; i<minhalista.size();i++){
+          inserirNaTabela(minhalista[i],i);
+        }
+    }
+    else{
+
+        QMessageBox::StandardButton resposta = QMessageBox::question(this,"Modificar tabela","Deseja mexer na tabela?",QMessageBox::Yes|QMessageBox::Close|QMessageBox::No);
+        if(resposta == QMessageBox::Yes){
+            Pessoa temp1;
+
+            ui->inputNome->setText(minhalista[row].getNome());
+            ui->label_6->setText("Insira um novo nome");
+            ui->inputData->setDate(minhalista[row].getData());
+            ui->label_7->setText("Insira uma nova data");
+            ui->descricaoPessoaText->setText(minhalista[row].getDescricaoPessoa());
+            ui->label_10->setText("Insira uma nova legenda");
+
+            ui->btConfirmar->setEnabled(false);
+            ui->btEditar->setEnabled(true);
+            //Dúvida aqui
+            ui->btEditar->setChecked(true);
+            if(ui->btEditar->isChecked() == true){
+                bool testa_nome = temp1.setNome(ui->inputNome->text());
+                bool testa_data = temp1.setData(ui->inputData->date());
+                temp1.setDescricaoPessoa(ui->descricaoPessoaText->toPlainText());
+
+                if(testa_nome == true && testa_data == true){
+                    minhalista.substituirPessoa(row, temp1);
+                    qDebug() << "Pessoa substituída";
+                }
+            }
+        }
     }
 }
 
+
+
+void MainWindow::on_btEditar_clicked(bool checked)
+{
+    if(checked == true){
+        qDebug() << "Botão editar";
+
+    }
+}

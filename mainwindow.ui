@@ -984,7 +984,7 @@
      </widget>
      <widget class="QComboBox" name="ordenacao">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1121,32 +1121,64 @@
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="bt_editarTabela">
+     <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>410</y>
-        <width>163</width>
-        <height>29</height>
+        <x>330</x>
+        <y>60</y>
+        <width>281</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>100</y>
+        <width>301</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>160</y>
+        <width>251</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btEditar">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>170</y>
+        <width>101</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>14</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Editar lista de pessoas</string>
-      </property>
-     </widget>
-     <widget class="QSpinBox" name="spinBox">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>410</y>
-        <width>50</width>
-        <height>29</height>
-       </rect>
+       <string>Editar</string>
       </property>
      </widget>
     </widget>
