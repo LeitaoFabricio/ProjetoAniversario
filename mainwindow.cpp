@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   //Impede a edição direta da tabela pelo usuário
   ui->tabelaAniversarios->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+  connect(&janela_modificar, SIGNAL(nomeAlterado()), this, SLOT(atualizarNome()));
 }
 
 MainWindow::~MainWindow()
@@ -43,7 +45,12 @@ void MainWindow::on_btConfirmar_clicked()
         inserirNaTabela(pessoa, qtde_linhas);
        }
     }else{
-      mensagemDeErro(testa_nome,testa_data);
+        //if(testa_data == true && testa_nome == false)
+            //QMessageBox::warning(this,"Nome inválido","Digite um nome válido.");
+        //else if(testa_data == false && testa_nome == true)
+            //QMessageBox::warning(this,"Data inválida","Digite uma data válida.");
+        //else if(testa_data == false && testa_nome == false)
+            QMessageBox::warning(this,"Dados inválidos","Insira dados válidos.");
     }
     habilitarOrdenacao();
     atualizarEstatisticas();
@@ -69,16 +76,6 @@ void MainWindow::inserirNaTabela(Pessoa p, int q_l)
         ui->tabelaAniversarios->setItem(q_l,1, new QTableWidgetItem(data1));
         ui->tabelaAniversarios->setItem(q_l,2, new QTableWidgetItem(p.getDescricaoPessoa()));
         ui->tabelaAniversarios->setItem(q_l,3, new QTableWidgetItem(QString::number(p.getIdade())));
-}
-//-----------------------------------------------------------------//
-void MainWindow::mensagemDeErro(bool n, bool d)
-{
-    if(d == true && n == false)
-        QMessageBox::critical(this,"Nome inválido","Digite um nome válido.");
-    else if(d == false && n == true)
-        QMessageBox::critical(this,"Data inválida","Digite uma data válida.");
-    else
-        QMessageBox::critical(this,"Dados inválidos","Insira dados válidos.");
 }
 //---------------------------------------------------------------------//
 bool MainWindow::habilitarOrdenacao()
@@ -106,6 +103,18 @@ bool MainWindow::limparOrdenacao()
 {
   ui->ordenacao->setCurrentIndex(0);
   return true;
+}
+//---------------------------------------------------------------//
+void MainWindow::atualizarNome()//Aqui dá problema
+{
+    Pessoa pessoa;
+
+    bool testa_nome = pessoa.setNome(janela_modificar.getAlterarNome());
+
+    if(testa_nome == 1){
+        minhalista.inserirPessoa(pessoa);
+
+    }
 }
 //---------------------------------------------------------------//
 void MainWindow::limparCamposCadastro()
@@ -154,7 +163,7 @@ void MainWindow::on_inputNome_cursorPositionChanged(int arg1, int arg2)
 //---------------------------------------------------------------------//
 void MainWindow::on_inputData_userDateChanged(const QDate &date)
 {
-   limparOrdenacao();
+    limparOrdenacao();
 }
 //---------------------------------------------------------------------//
 void MainWindow::on_actionSalvar_triggered()
@@ -187,5 +196,9 @@ void MainWindow::on_inputNome_returnPressed()
 //---------------------------------------------------------------------//
 void MainWindow::on_bt_editarTabela_clicked()
 {
-
+    QMessageBox::StandardButton resposta = QMessageBox::question(this,"Modificar tabela","Deseja mexer na tabela?");
+    if(resposta == QMessageBox::Yes){
+        janela_modificar.show();
+    }
 }
+

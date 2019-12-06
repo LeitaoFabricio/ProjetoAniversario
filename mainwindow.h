@@ -11,6 +11,7 @@
 
 #include "pessoa.h"
 #include "lista.h"
+#include "modificar.h"
 
 namespace Ui {
   class MainWindow;
@@ -40,10 +41,12 @@ private slots:
 
   void on_inputNome_returnPressed();
 
-  void on_bt_editarTabela_clicked();
+   void on_bt_editarTabela_clicked();
 
 private:
   Ui::MainWindow *ui;
+
+  Modificar janela_modificar;
 
   Lista minhalista;
 
@@ -62,6 +65,8 @@ private:
   bool limparOrdenacao(int a1, int a2);
 
   bool limparOrdenacao();
+
+  void atualizarNome();
 
 };
 

@@ -26,10 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     lista.cpp \
-    pessoa.cpp
+    pessoa.cpp \
+    modificar.cpp
 
 HEADERS  += mainwindow.h \
     lista.h \
-    pessoa.h
+    pessoa.h \
+    modificar.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    modificar.ui
