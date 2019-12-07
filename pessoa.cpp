@@ -49,19 +49,29 @@ bool Pessoa::setDescricaoPessoa(const QString &value)
 
 void Pessoa::setIdade(const QDate &value)
 {
-  QDate data_atual = data_atual.currentDate();
+    int idade_em_dias = 0;
 
-  if(data_atual.year() > value.year()){
+    QDate data_atual = data_atual.currentDate();
 
-    if((data_atual.month() == value.month() && data_atual.day() >= value.day()) || (data_atual.month() > value.month() && data_atual.day() < value.day())){
-      idade = data_atual.year() - value.year();
-    }else{
-      idade = data_atual.year() - value.year() - 1;//pode-se calcular o tempo até o aniversário
-    }
+    idade_em_dias = value.daysTo(data_atual);
 
-  } else{
-    idade = 0;//completar, informando os meses de idade
-  }
+    idade = idade_em_dias/365;
+
+
+
+
+      /*
+      if(data_atual.year() > value.year()){
+
+        if((data_atual.month() == value.month() && data_atual.day() >= value.day()) || (data_atual.month() > value.month() && data_atual.day() < value.day())){
+          idade = data_atual.year() - value.year();
+        }else{
+          idade = data_atual.year() - value.year() - 1;//pode-se calcular o tempo até o aniversário
+        }
+
+      } else{
+        idade = 0;//completar, informando os meses de idade
+      }*/
 }
 
 void Pessoa::setIdade(const QString &value)

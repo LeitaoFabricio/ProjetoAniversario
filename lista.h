@@ -30,7 +30,7 @@ public:
   void salvarDados(QString file);
   void carregarDados(QString file);
   void deletarPessoa(const int &linha);
-  void substituirPessoa(const int &linha, Pessoa p);
+  bool substituirPessoa(const int &linha, Pessoa p);
 };
 
 bool compararPorIdade(Pessoa a, Pessoa b);

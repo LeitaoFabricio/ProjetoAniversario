@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tabelaAniversarios->setEditTriggers(QAbstractItemView::NoEditTriggers);
   habilitarOrdenacao();
 
-  connect(&janela_modificar, SIGNAL(nomeAlterado()), this, SLOT(atualizarNome()));
+  connect(&janela_modificar, SIGNAL(respostaOpcao()), this, SLOT(atualizarNome()));
+
+  //connect(ui->btEditar, SIGNAL(clicked(clicado1)), this, SLOT(slotBotaoEditar(Pessoa p)));
 }
 
 MainWindow::~MainWindow()
@@ -44,16 +46,13 @@ void MainWindow::on_btConfirmar_clicked()
         //Nova linha na tabela
         ui->tabelaAniversarios->insertRow(qtde_linhas);
         inserirNaTabela(pessoa, qtde_linhas);
-       }
+      } else{
+          dadosRepetidos(pessoa);
+      }
       habilitarOrdenacao();
       atualizarEstatisticas();
     }else{
-        if(testa_data == true && testa_nome == false)
-            QMessageBox::warning(this,"Nome inválido","Digite um nome válido.");
-        else if(testa_data == false && testa_nome == true)
-            QMessageBox::warning(this,"Data inválida","Digite uma data válida.");
-        else if(testa_data == false && testa_nome == false)
-            QMessageBox::warning(this,"Dados inválidos","Insira dados válidos.");
+      invalidosDataNome(testa_data,testa_nome);
     }
 }
 //---------------------------------------------------------------//
@@ -105,10 +104,55 @@ bool MainWindow::limparOrdenacao()
   ui->ordenacao->setCurrentIndex(0);
   return true;
 }
+//--------------------------------------------------------------//
+void MainWindow::dadosRepetidos(Pessoa p)
+{
+    QMessageBox::warning(this,"Dados repetidos", p.getNome()+", "+p.getData().toString()+", já consta na tabela.\nInsira dados que ainda não constem na tabela.");
+}
+
+void MainWindow::invalidosDataNome(bool td, bool tn)
+{
+    if(td == true && tn == false)
+        QMessageBox::warning(this,"Nome inválido","Digite um nome válido.");
+    else if(td == false && tn == true)
+        QMessageBox::warning(this,"Data inválida","Digite uma data válida.");
+    else if(td == false && tn == false)
+        QMessageBox::warning(this,"Dados inválidos","Insira dados válidos.");
+}
 //---------------------------------------------------------------//
 void MainWindow::atualizarNome()//Aqui dá problema
 {
+    qDebug() << janela_modificar.getAlterarNome();
 
+    if(janela_modificar.getAlterarNome() == "Excluir linha"){
+        minhalista.deletarPessoa(row1);
+
+        QMessageBox::information(this,"Edição realizada com sucesso!","Pessoa removida.");
+
+        ui->tabelaAniversarios->removeRow(row1);
+        ui->tabelaAniversarios->clearContents();
+        for(int i=0; i<minhalista.size();i++){
+          inserirNaTabela(minhalista[i],i);
+        }
+
+        atualizarEstatisticas();
+    }
+    else if(janela_modificar.getAlterarNome() == "Editar dados da pessoa"){
+
+            ui->inputNome->setText(minhalista[row1].getNome());
+            ui->label_6->setText("Insira um novo nome");
+            ui->inputData->setDate(minhalista[row1].getData());
+            ui->label_7->setText("Insira uma nova data");
+            ui->descricaoPessoaText->setText(minhalista[row1].getDescricaoPessoa());
+            ui->label_10->setText("Insira uma nova legenda");
+
+            ui->btConfirmar->setEnabled(false);
+            ui->btEditar->setEnabled(true);
+
+            on_btEditar_clicked(clicado1);//gambiarra
+
+    }
+    janela_modificar.close();
 }
 //---------------------------------------------------------------//
 void MainWindow::limparCamposCadastro()
@@ -117,6 +161,10 @@ void MainWindow::limparCamposCadastro()
   ui->inputNome->clear();
   ui->inputData->QDateEdit::setDate(d);
   ui->descricaoPessoaText->clear();
+
+  ui->label_6->clear();
+  ui->label_7->clear();
+  ui->label_10->clear();
 }
 //---------------------------------------------------------------//
 void MainWindow::atualizarEstatisticas()
@@ -191,58 +239,42 @@ void MainWindow::on_inputNome_returnPressed()
 void MainWindow::on_tabelaAniversarios_cellDoubleClicked(int row, int column)
 {
     ui->tabelaAniversarios->selectRow(row);
+    janela_modificar.show();
 
-    QMessageBox::StandardButton resposta1 = QMessageBox::question(this,"Escolha a maneira","OPERAÇÃO?",QMessageBox::Yes|QMessageBox::Close|QMessageBox::No);
-    //yes -> excluir
-    //no -> editar
-    if(resposta1 == QMessageBox::Yes){
-        minhalista.deletarPessoa(row);
-
-        QMessageBox::information(this,"Edição realizada com sucesso!","Pessoa removida.");
-
-        ui->tabelaAniversarios->removeRow(row);
-        ui->tabelaAniversarios->clearContents();
-        for(int i=0; i<minhalista.size();i++){
-          inserirNaTabela(minhalista[i],i);
-        }
-    }
-    else{
-
-        QMessageBox::StandardButton resposta = QMessageBox::question(this,"Modificar tabela","Deseja mexer na tabela?",QMessageBox::Yes|QMessageBox::Close|QMessageBox::No);
-        if(resposta == QMessageBox::Yes){
-            Pessoa temp1;
-
-            ui->inputNome->setText(minhalista[row].getNome());
-            ui->label_6->setText("Insira um novo nome");
-            ui->inputData->setDate(minhalista[row].getData());
-            ui->label_7->setText("Insira uma nova data");
-            ui->descricaoPessoaText->setText(minhalista[row].getDescricaoPessoa());
-            ui->label_10->setText("Insira uma nova legenda");
-
-            ui->btConfirmar->setEnabled(false);
-            ui->btEditar->setEnabled(true);
-            //Dúvida aqui
-            ui->btEditar->setChecked(true);
-            if(ui->btEditar->isChecked() == true){
-                bool testa_nome = temp1.setNome(ui->inputNome->text());
-                bool testa_data = temp1.setData(ui->inputData->date());
-                temp1.setDescricaoPessoa(ui->descricaoPessoaText->toPlainText());
-
-                if(testa_nome == true && testa_data == true){
-                    minhalista.substituirPessoa(row, temp1);
-                    qDebug() << "Pessoa substituída";
-                }
-            }
-        }
-    }
+    row1 = row;
 }
-
-
-
+//----------------------------------------------------------------------------------//
 void MainWindow::on_btEditar_clicked(bool checked)
 {
-    if(checked == true){
-        qDebug() << "Botão editar";
+    clicado1 = checked;
+    if(clicado1 == false){
 
+        bool testa_nome = p_alterada.setNome(ui->inputNome->text());
+        bool testa_data = p_alterada.setData(ui->inputData->date());
+        p_alterada.setDescricaoPessoa(ui->descricaoPessoaText->toPlainText());
+        p_alterada.setIdade(ui->inputData->date());
+
+        if(testa_nome == true && testa_data == true){
+            limparCamposCadastro();
+
+            bool substituindo_pessoa = minhalista.substituirPessoa(row1, p_alterada);
+            qDebug() << "Pessoa substituída";
+
+            if(substituindo_pessoa == true){
+                ui->tabelaAniversarios->clearContents();
+                for(int i=0; i<minhalista.size();i++){
+                  inserirNaTabela(minhalista[i],i);
+                }
+            } else{
+                dadosRepetidos(p_alterada);
+            }
+            atualizarEstatisticas();
+            ui->btConfirmar->setEnabled(true);
+            ui->btEditar->setEnabled(false);
+            clicado1 = true;
+
+        } else{
+            invalidosDataNome(testa_data,testa_nome);
+        }
     }
 }

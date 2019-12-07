@@ -9,6 +9,7 @@
 #include <locale>
 #include <QFileDialog>
 #include <QPushButton>
+#include <QInputDialog>
 
 #include "pessoa.h"
 #include "lista.h"
@@ -44,6 +45,8 @@ private slots:
 
   void on_tabelaAniversarios_cellDoubleClicked(int row, int column);
 
+  void atualizarNome();
+
   void on_btEditar_clicked(bool checked);
 
 private:
@@ -54,6 +57,12 @@ private:
   Lista minhalista;
 
   QString prepararData(QDate d1);
+
+  int row1;
+
+  bool clicado1 = true;
+
+  Pessoa p_alterada;
 
   void inserirNaTabela(Pessoa p, int q_l);
 
@@ -69,12 +78,9 @@ private:
 
   bool limparOrdenacao();
 
-  void atualizarNome();
+  void dadosRepetidos(Pessoa p);
 
-signals:
-
-  void toggled(bool checked);
-
+  void invalidosDataNome(bool td, bool tn);
 
 };
 

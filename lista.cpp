@@ -134,9 +134,14 @@ void Lista::deletarPessoa(const int &linha)
     minhalista.remove(linha);
 }
 
-void Lista::substituirPessoa(const int &linha, Pessoa p)
+bool Lista::substituirPessoa(const int &linha, Pessoa p)
 {
-    minhalista.replace(linha, p);
+    if(inserirPessoa(p) == true){
+        minhalista.replace(linha, p);
+        return true;
+    } else{
+        return false;
+    }
 }
 
 bool compararPorIdade(Pessoa a, Pessoa b)
