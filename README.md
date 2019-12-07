@@ -1,4 +1,4 @@
-# Programa "Para não esquecer a data"
+# Programa "Para não esquecer da data"
 
 Este programa tem por objetivo ajudá-lo a organizar as datas que marcam o aniversário daqueles que o rodeiam.
   
@@ -59,8 +59,11 @@ Por isso, este programa é adequado para solucionar esse problema da nossa memó
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_5.jpg)
 
 ## 5. Como salvar a tabela em um arquivo ou carregar um arquivo já exitente?
-![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/salvar_e_carregar.jpg)
-
+Para salvar a tabela com as informações cadastradas pode-se clicar com o mouse no menu "Arquivo" e escolher a opção correspondentes. O mesmo ocorre para carregar um arquivo já exitente no computador. 
+  
+  ![Destaque para o menu "Arquivo"](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/salvar_e_carregar.jpg)
+  
+  As teclas de atalho para salvar e carregar são "Ctrl+S" e "Ctrl+L", respectivamente.  
 
 
   
