@@ -10,28 +10,28 @@ Por isso, este programa é adequado para solucionar esse problema da nossa memó
 
 ### 1.1. Conhecendo as telas
 
-##### 1.1.1. Tela inicial (cadastro)
+#### 1.1.1. Tela inicial (cadastro)
 ![A primeira tela do programa](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/tela_inicial_1.jpg)
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/tela_inicial_2.jpg)
 
-##### 1.1.2. Tela de estatísticas
+#### 1.1.2. Tela de estatísticas
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/tela_estatisticas.jpg)
 
 ### 1.2. Como cadastrar uma nova pessoa?
 
-##### 1.2.1. Nome
+#### 1.2.1. Nome
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/cadastrando_nome.jpg) 
 
-##### 1.2.2. Data
+#### 1.2.2. Data
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/cadastrando_data.jpg)
 
-##### 1.2.3. Descrição
+#### 1.2.3. Descrição
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/cadastrando_descricao.jpg)
 
-##### 1.2.4. Tabela com o cadastro da primeira pessoa:
+#### 1.2.4. Tabela com o cadastro da primeira pessoa:
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/tabela_com_cadastro_1.jpg)
 
-##### 1.2.5. Cálculo da idade
+#### 1.2.5. Cálculo da idade
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/tabela_com_cadastro_2.jpg)
 
 ### 1.3. Mostrando as estatísticas
@@ -46,6 +46,8 @@ Por isso, este programa é adequado para solucionar esse problema da nossa memó
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/ordenacao_por_data.jpg)
 
 ## 3. Como remover uma pessoa da tabela?
+![Selecionando uma linha.](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/selecionando_linha.jpg)
+![Escolha da operação.](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/escolha_modificando_tabela.jpg)
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/excluindo_1.jpg)
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/excluindo_2.jpg)
 
@@ -56,6 +58,8 @@ Por isso, este programa é adequado para solucionar esse problema da nossa memó
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_4.jpg)
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_5.jpg)
 
-## 5. 
+## 5. Como salvar a tabela em um arquivo?
+
+## 6. Como carregar os dados de um arquivo existente?
 
   
