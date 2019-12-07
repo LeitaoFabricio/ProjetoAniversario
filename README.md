@@ -58,8 +58,9 @@ Por isso, este programa é adequado para solucionar esse problema da nossa memó
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_4.jpg)
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_5.jpg)
 
-## 5. Como salvar a tabela em um arquivo?
+## 5. Como salvar a tabela em um arquivo ou carregar um arquivo já exitente?
+![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/salvar_e_carregar.jpg)
 
-## 6. Como carregar os dados de um arquivo existente?
+
 
   
