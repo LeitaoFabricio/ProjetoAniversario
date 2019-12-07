@@ -210,13 +210,21 @@ void MainWindow::on_inputData_userDateChanged(const QDate &date)
 //---------------------------------------------------------------------//
 void MainWindow::on_actionSalvar_triggered()
 {
-  QString filename;
-  filename = QFileDialog::getSaveFileName(this,"Salvar Arquivo","","*.csv");
-  minhalista.salvarDados(filename);
+    if(minhalista.size() >= 1){
+        QString filename;
+        filename = QFileDialog::getSaveFileName(this,"Salvar Arquivo","","*.csv");
+        minhalista.salvarDados(filename);
+    } else {
+        QMessageBox::warning(this,"Tabela vazia","Nenhuma informação disponível para ser salva.");
+    }
 }
 //--------------------------------------------------------------------//
 void MainWindow::on_actionCarregar_triggered()
 {
+  //if(minhalista.size() >= 1){
+    //minhalista.apagaTudoDaLista();
+    //ui->tabelaAniversarios->clearContents();
+  //}
   QString filename;
   filename = QFileDialog::getOpenFileName(this, "Abrir Arquivo","","*.csv");
   minhalista.carregarDados(filename);

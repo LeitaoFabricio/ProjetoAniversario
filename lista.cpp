@@ -144,6 +144,11 @@ bool Lista::substituirPessoa(const int &linha, Pessoa p)
     }
 }
 
+//bool Lista::apagaTudoDaLista()
+//{
+  //  minhalista.clear();
+//}
+
 bool compararPorIdade(Pessoa a, Pessoa b)
 {
     return a.getIdade()<b.getIdade();

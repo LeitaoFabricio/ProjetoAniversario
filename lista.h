@@ -31,6 +31,7 @@ public:
   void carregarDados(QString file);
   void deletarPessoa(const int &linha);
   bool substituirPessoa(const int &linha, Pessoa p);
+  //bool apagaTudoDaLista();
 };
 
 bool compararPorIdade(Pessoa a, Pessoa b);
