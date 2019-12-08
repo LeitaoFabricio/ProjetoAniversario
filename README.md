@@ -106,7 +106,7 @@ Sequência de passos para editar um item cadastrado na tabela.
   
 ![](https://github.com/LeitaoFabricio/ProjetoAniversario/blob/master/editando_5.jpg)
 
-## 5. Como salvar a tabela em um arquivo ou carregar um arquivo já exitente?
+## 5. Como salvar a tabela em um arquivo ou carregar um arquivo já existente?
   
 Para salvar a tabela com as informações cadastradas pode-se clicar com o mouse no menu "Arquivo" e escolher a opção correspondentes. O mesmo ocorre para carregar um arquivo já exitente no computador. 
 
